@@ -17,6 +17,9 @@
 //= link pages/consultations/show.css
 //= link pages/consultations/form.css
 
+//=========application pages ========
+//=link pages/inbox.css
+
 //COMPONENTS
 //= link components/nav-bar.css
 //= link components/consultation-card.css

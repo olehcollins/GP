@@ -4,9 +4,10 @@
   gap: 2rem;
 }
 .apt-card {
+  padding-left: 2rem;
   position: relative;
   width: 500px;
-  height: 350px;
+  height: 300px;
   backdrop-filter: blur(25px);
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
@@ -14,6 +15,8 @@
   border-radius: 30px;
   transition: 0.5s hover ease-in-out;
   transition: 1s width ease-in-out;
+  margin-bottom: 1rem;
+  color: white;
 }
 
 .aptm-top {
@@ -42,7 +45,7 @@
 }
 .profile-image-apt {
   margin-top: 1.5rem;
-  margin-left: 1rem;
+  margin-left: 5rem;
   margin-right: 4rem;
   width: 100px;
   height: 100px;
@@ -68,6 +71,7 @@
 }
 
 .apt-left {
+  padding-top: 1rem;
   display: flex;
   flex-direction: row;
   gap: 2rem;
@@ -75,4 +79,10 @@
 }
 .message {
   width: 100%;
+}
+
+.status-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
 }

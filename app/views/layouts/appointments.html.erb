@@ -33,6 +33,7 @@
             <box-icon class="nav-icon" type='solid' name='dashboard' animation="tada-hover"></box-icon>
           <% end %>
           <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class:'btn btn-danger' %>
+          <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-nav'%>
           <% else %>
           <%= link_to 'Sign Up', new_user_registration_path, class:'nav-link'%>
           <%= link_to 'Sign In', new_user_session_path, class:'nav-link'%>
@@ -52,18 +53,18 @@
     <br>
     <div class="consult-content-layout">
       <% if notice || alert %>
-        <div class="all-notices">
+        <div class="all-notices" data-controller="noticetoggle">
           <% if notice %>
-          <p class="notices">
-            <%= notice %> Testing 1 to 3 👍
-            <button class="btn-notice">
+          <p class="notices" data-noticetoggle-target="notice">
+            <%= notice %>
+            <button class="btn-notice" data-action="click->noticetoggle#fire">
               <box-icon name='x' animation='tada' ></box-icon>
             </button>
           </p>
           <% end %>
           <%if alert %>
           <p class="alerts">
-            <%= alert %> Testing 1 to 3 👍
+            <%= alert %>
             <button class="btn-notice">
               <box-icon name='x' animation='tada' ></box-icon>
             </button>
@@ -82,53 +83,40 @@
         <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-dash'%>
         <div class="profile-info">
           <span class="user-name">
-            <box-icon name='male'></box-icon><%= @current_user_fn %>
+            <box-icon type='solid' name='user'></box-icon>
           </span>
-          <%= link_to 'Edit Profile', edit_user_registration_path, class:'nav-link'%>
+          <%= link_to @current_user_fn, edit_user_registration_path, class:'nav-link'%>
         </div>
       </a>
     </div>
     <small class="menu-heading">
       <span>Admin Tools</span>
     </small>
+    <hr style='margin-bottom: 1rem;'>
     <ul class="tools" >
       <li class="dash-link">
-        <box-icon type='solid' name='spreadsheet'></box-icon>
-        <%= link_to 'My Drs', dr_appointments_path('doctors'), class:'dash-nav-link'%>
+        <box-icon name='inbox' type='solid' ></box-icon>
+        <%= link_to 'Inbox', messages_path, class:'dash-nav-link'%>
       </li>
       <li class="dash-link">
-        <box-icon type='solid' name='spreadsheet'></box-icon>
-        <%= link_to 'My Patients',  pt_appointments_path('patients'), class:'dash-nav-link'%>
+        <box-icon type='solid' name='contact'></box-icon>
+        <%= link_to 'My Drs', dr_appointments_path('doctor'), class:'dash-nav-link'%>
       </li>
       <li class="dash-link">
-        <box-icon type='solid' name='spreadsheet'></box-icon>
-        <%= link_to 'Add consultation', new_consultation_path, class:'dash-nav-link'%>
+        <box-icon type='solid' name='contact'></box-icon>
+        <%= link_to 'My Patients', pt_appointments_path('patients'), class:'dash-nav-link'%>
       </li>
       <li class="dash-link">
-        <box-icon type='solid' name='spreadsheet'></box-icon>
-        <%= link_to 'All Consultations', root_path, class:'dash-nav-link'%>
+        <box-icon name='folder-plus'></box-icon>
+        <%= link_to 'Consultations', new_consultation_path, class:'dash-nav-link'%>
       </li>
-      <hr>
-      <li class="dash-link notifications">
-        <box-icon name="bell" animation="tada-hover"></box-icon>
-        <%= link_to 'Notifications', edit_user_registration_path, class:'dash-nav-link'%>
-        <% if @message_p || @message_dr%>
-          <div class="message-notices" data-controller="toggle_notice">
-            <div data-toggle-target="message" class="notice-close">
-              <% if @message_dr != ''%>
-                <p class=""><%= @message_dr %></p>
-                <button data-action="click->toggle#fire" class="btn btn-danger mx-5 mb-5">&times;</button>
-              <% end %>
-            </div>
-            <div data-toggle-target="message"
-            class="notice-close">
-              <% if @message_p != ''%>
-                <p class=""><%= @message_p %></p>
-                <button data-action="click->toggle#fire" class="btn btn-danger mx-5 mb-5">&times;</button>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
+      <li class="dash-link">
+        <box-icon type='solid' name='archive-out'></box-icon>
+        <%= link_to 'Consultations', browse_cons_path, class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link" style="margin-bottom: 4rem">
+        <box-icon type='solid' name='archive-out'></box-icon>
+        <%= link_to 'Appointments', root_path, class:'dash-nav-link'%>
       </li>
     </ul>
   </div>

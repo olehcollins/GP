@@ -1,40 +1,32 @@
 class AppointmentsController < ApplicationController
+  require 'json'
   before_action :set_consultation, only: [:new, :create]
-  before_action :set_request, except: [:index, :new, :destroy]
-  # before_action :set_status, only: [:index]
+  before_action :set_appointment, only: [:approve, :destroy, ]
 
+  def inbox
+    set_messages
+  end
 
   def index
-    @appt_arr = []
     if params[:format] == 'patients'
+      @doctor = true
+      patient_appointments = []
       consultations = Consultation.where(user_id: current_user.id)
       consultations.each do |cons|
-        appointments = cons.appointments
-        appointments.each do |apt|
-          full_name = apt.patient
-          status = apt.status
-          email = User.find(apt.user_id).email
-          date = apt.date
-          location = apt.location
-          photo = User.find(apt.user_id).profile_photo.key
-          @appt_arr << {full_name: full_name, status: status, email: email, date: date, location: location, photo: photo, doctor: true, aptm: apt}
+        cons.appointments.each do |aptm|
+          patient_appointments << aptm
         end
       end
+      @appt_arr = set_appointment_details(patient_appointments)
     else
-      @dr_app = Appointment.where(user_id: current_user.id)
-      @appt_arr = @dr_app.map do |apt|
-        dr = User.find(apt.consultation.user_id)
-        full_name = "#{dr.first_name.capitalize} #{dr.last_name.capitalize}"
-        status = apt.status
-        email = current_user.email
-        date = apt.date
-        location = apt.location
-        photo = dr.profile_photo.key
-        consultation = apt.consultation
-        @pt_apt = {full_name: full_name, status: status, email: email, date: date, location: location, photo: photo, consultation:consultation, doctor: false, aptm: apt}
-      end
+      @doctor = false
+      dr_appointments = Appointment.where(user_id: current_user.id)
+      @appt_arr = set_appointment_details(dr_appointments)
     end
+
   end
+
+
 
   def cancel
     appointment = Appointment.find(params[:appointment_id])
@@ -44,29 +36,13 @@ class AppointmentsController < ApplicationController
   end
 
   def approve
-    if @appointment.status == 'pending'
-      @appointment.status = 'approved'
-
-    else
-      @appointment.status = 'pending'
-    end
-
+    @appointment.status = 'approved'
     if @appointment.save
-      redirect_to consultations_path, notice: "Appointment was successfully update."
+      redirect_to consultations_path, notice: "Appointment was successfully updated."
     else
       render :new, status: :unprocessable_entity
     end
   end
-
-  def deny
-    @appointment.status = 'denied'
-    if @appointment.status == 'denied'
-      if @appointment.destroy
-        render notice: 'you appointment was cancelled'
-      end
-    end
-  end
-
 
   def new
     @appointment = Appointment.new
@@ -76,16 +52,35 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new(appointment_params)
     @appointment.consultation = @consultation
     @appointment.user_id = current_user.id
-    patient = "#{current_user.first_name.capitalize} #{current_user.last_name.capitalize}"
-    @appointment.patient = patient
+    patient_name = "#{current_user.first_name.capitalize} #{current_user.last_name.capitalize}"
+    @appointment.patient = patient_name
     doctor = User.find(@consultation.user_id)
-    doctor_fullname = "#{doctor.first_name.capitalize} #{doctor.last_name.capitalize}"
+    doctor_fullname = "Dr #{doctor.first_name.capitalize} #{doctor.last_name.capitalize}"
     @appointment.doctor = doctor_fullname
-    @appointment.request = "#{patient} is requesting an appointment"
     @appointment.location = @consultation.location
+    date = @appointment.date
+    speciality = @consultation.speciality
+    location = @appointment.location
+    sender_photo = current_user.profile_photo.key
+
+    notification_data = {
+      user: doctor,
+      message: {
+        sender_id: current_user.id,
+        appointment_id: @appointment.id,
+        consultation_id: @consultation.id,
+        sender_name: patient_name,
+        recipient: doctor_fullname,
+        location: location,
+        speciality: speciality,
+        date: date,
+        sender_photo: sender_photo,
+        content: "#{patient_name} is requesting an appointment on the #{date}, at #{location} for #{speciality}"
+      }
+    }
 
     if @appointment.save
-      redirect_to consultation_path(@consultation), notice: "Appointment was successfully created."
+      send_request(notification_data, @consultation)
     else
       raise
       render :new, status: :unprocessable_entity
@@ -93,18 +88,37 @@ class AppointmentsController < ApplicationController
   end
 
   def destroy
-    doctor = User.find(@appointment.consultation.user_id)
-    if doctor != current_user
-      doctor.notifications << "#{@appointment.patient} has cancelled their appointment schedule for the #{@appointment.date}"
-    else
-      patient.notifications << "#{@appointment.doctor} has cancelled your appointment schedule for the #{@appointment.date}"
-    end
     @appointment.destroy
     redirect_to consultations_path, notice: "Appointment was successfully deleted."
   end
 
   private
 
+  def set_appointment_details(appointments)
+    appt_arr = []
+    appointments.each do |aptm|
+      status = aptm.status
+      date = aptm.date
+      location = aptm.location
+      consultation = aptm.consultation
+      speciality = aptm.consultation.speciality
+
+      if @doctor
+        patient = User.find(aptm.user_id)
+        full_name = "#{patient.first_name.capitalize} #{patient.last_name.capitalize}"
+        email = patient.email
+        photo = patient.profile_photo.key
+      else
+        dr = User.find(aptm.consultation.user_id)
+        full_name = "Dr #{dr.first_name.capitalize} #{dr.last_name.capitalize}"
+        photo = dr.profile_photo.key
+        email = dr.email
+      end
+
+      appt_arr << {full_name: full_name, status: status, email: email, date: date, location: location, photo: photo, aptm: aptm, speciality: speciality, consultation: consultation}
+    end
+    @appt_arr = appt_arr
+  end
 
   def set_appointment
     @appointment = Appointment.find(params[:id])
@@ -118,32 +132,41 @@ class AppointmentsController < ApplicationController
     @consultation = Consultation.find(params[:consultation_id])
   end
 
-  def set_status
+  def send_request(data, instance_path)
+    json_data = data.to_json
+    notification = Notification.new(message: json_data, user: data[:user])
+    if notification.save
+      redirect_to consultation_path(instance_path), notice: "Appointment was successfully requested."
+    else
+      raise
+    end
+  end
+
+  def set_messages
+    @messages = []
     if user_signed_in?
-      @patient_appointments = @consultation.appointments
-      @dr_appointments = current_user.appointments
-      if current_user == @consultation.user
-        @doctor = true
-        @patients = []
-        @patient_appointments.each do |apt|
-          patient = User.find(apt.user_id)
-          full_name = "#{patient.first_name.capitalize} #{patient.last_name.capitalize}"
-          email = patient.email
-          date = apt.date
-          @patients << {full_name: full_name, email: email, date: date, apt: apt}
-        end
-      else
-        @doctor = false
-        @doctors = []
-        @dr_appointments.each do |apt|
-          doctor = User.find(@consultation.user_id)
-          full_name = "#{doctor.first_name.capitalize} #{doctor.last_name.capitalize}"
-          email = doctor.email
-          date = apt.date
-          speciality = apt.consultation.speciality
-          @doctors << {full_name: full_name, email: email, date: date, apt: apt, status: apt.status, speciality: speciality}
+      notifications = current_user.notifications
+      if notifications
+        notifications.each do |noti|
+          message =  JSON.parse(noti.message)
+          @messages << message["message"]
         end
       end
     end
+    @messages
   end
+  # def doctor_response
+  #   data = {
+  #     user: current_user,
+  #     message: {
+  #       content: "your request has been declined"
+  #     }
+  #   }
+  #   test = Notification.new(data)
+  #   if user_signed_in?
+  #     message = eval(test.message)
+  #     flash[:notice] = message[:content]
+  #     # raise
+  #   end
+  # end
 end

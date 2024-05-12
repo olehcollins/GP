@@ -55,7 +55,6 @@
 
 .form-box {
   width: 400px;
-  height: 100;
   padding-left: 3rem;
   padding-right: 1rem;
 }
@@ -71,6 +70,7 @@
   display: flex;
   gap: 1rem;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .input-f {

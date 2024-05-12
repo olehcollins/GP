@@ -1,14 +1,14 @@
-.apt-btns {
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-  margin-left: 2rem;
-  margin-top: 2rem;
+h3 {
+  text-align: center;
+  margin-bottom: 1rem;
 }
+
 .cons-card {
+  margin-left: 2rem;
+  padding-left: 1rem;
   position: relative;
-  width: 550px;
-  height: 800px;
+  width: 95%;
+  height: 490px;
   backdrop-filter: blur(25px);
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
@@ -18,13 +18,13 @@
 }
 
 .description {
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 1rem;
-  width: 80%;
+  width: 90%;
   text-align: justify;
   padding-left: 2rem;
-  margin-left: 2rem;
 }
+
 .cons-card:hover {
   /* transform: translateY(-10px); */
   cursor: pointer;
@@ -46,12 +46,13 @@
   width: 50px;
   height: 50px;
 }
+
 .nav-icon:hover {
   fill: #02cbf8;
 }
 
 .top {
-  font-size: 2rem;
+  font-size: 1.7rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -59,19 +60,23 @@
   padding: 12px 15px;
   border-bottom: 1px solid #d5cccc24;
 }
+/*
 .top span {
   font-size: 20px;
   margin-left: 20px;
 }
+
 .top i {
   font-size: 30px;
   padding: 10px;
   border-radius: 30%;
 }
+
 .top i:hover {
   background: rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
+
 .top p {
   position: absolute;
   top: 50px;
@@ -82,48 +87,63 @@
   opacity: 0;
   transition: 0.5s ease-in-out;
 }
+
 .top i:hover ~ p {
   opacity: 1;
   transition: 0.5s ease-in-out;
-}
-.middle {
+} */
+
+.middle-show {
+  margin-top: 1rem;
   display: flex;
+  justify-content: space-evenly;
   flex-direction: row;
   /* padding: 20px 30px 0px 30px; */
 
   .profile-image {
     margin-top: 1.5rem;
     margin-left: 1rem;
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     object-position: center;
   }
 }
-.middle img {
+
+.middle-show img {
   width: 170px;
   border-radius: 50%;
   border: 5px solid transparent;
   outline: 3px dashed rgba(255, 255, 255, 0.25);
   transition: 0.3s ease-in-out;
 }
-.middle:hover {
+
+.middle-show:hover {
   img {
     outline: 3px dashed #02cbf8;
     transform: translateY(-5px);
   }
 }
-.middle .right {
-  margin: 20px 10px 10px 50px;
-}
+
 ul li {
   list-style: none;
   width: 100%;
 }
+
+.bio-box {
+  width: 500px;
+  margin-left: 3rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  text-align: justify;
+}
+
 .social-icon {
   display: flex;
   flex-direction: row;
 }
+
 .social-icon span {
   display: flex;
   justify-content: center;
@@ -136,21 +156,25 @@ ul li {
   transition: 0.4s;
   cursor: pointer;
 }
+
 .social-icon i {
   font-size: 20px;
 }
+
 .social-icon span:hover {
   color: #3c79db;
   background: #fff;
   transform: translateY(-4px);
   box-shadow: inset 0 0 0 15px #fff;
 }
+
 .icon-div {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
   align-items: center;
 }
+
 .bottom {
   margin-top: 1rem;
   display: flex;
@@ -164,4 +188,39 @@ ul li {
   display: flex;
   gap: 2rem;
   align-items: center;
+}
+
+.appointment_date {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  select {
+    color: white;
+    backdrop-filter: blur(25px);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    font-size: 1rem;
+  }
+}
+
+.apt-btns {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  margin-left: 2rem;
+  margin-top: 2rem;
+
+  a {
+    height: 35px;
+  }
+}
+
+.book-btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
 }

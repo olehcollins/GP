@@ -53,11 +53,11 @@
     <br>
     <div class="consult-content-layout">
       <% if notice || alert %>
-        <div class="all-notices">
+        <div class="all-notices" data-controller="noticetoggle">
           <% if notice %>
-          <p class="notices">
-            <%= notice %> Testing 1 to 3 👍
-            <button class="btn-notice">
+          <p class="notices" data-noticetoggle-target="notice">
+            <%= notice %>
+            <button class="btn-notice" data-action="click->noticetoggle#fire">
               <box-icon name='x' animation='tada' ></box-icon>
             </button>
           </p>
@@ -96,7 +96,7 @@
     <ul class="tools" >
       <li class="dash-link">
         <box-icon name='inbox' type='solid' ></box-icon>
-        <%= link_to 'Inbox', dr_appointments_path('doctor'), class:'dash-nav-link'%>
+        <%= link_to 'Inbox', messages_path, class:'dash-nav-link'%>
       </li>
       <li class="dash-link">
         <box-icon type='solid' name='contact'></box-icon>
@@ -112,7 +112,7 @@
       </li>
       <li class="dash-link">
         <box-icon type='solid' name='archive-out'></box-icon>
-        <%= link_to 'Consultations', root_path, class:'dash-nav-link'%>
+        <%= link_to 'Consultations', browse_cons_path, class:'dash-nav-link'%>
       </li>
       <li class="dash-link" style="margin-bottom: 4rem">
         <box-icon type='solid' name='archive-out'></box-icon>

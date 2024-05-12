@@ -1,59 +1,59 @@
 <%= stylesheet_link_tag "components/consultation-card", "data-turbo-track": "reload" %>
-<h1>Home</h1>
-<div class="consult-cards">
+<h1>Consultations</h1>
+<div class="consult-cards-all">
   <% @all_consultations.each do |consult|%>
-  <div>
-    <section class="all-consultations">
-      <div class="card">
-        <div class="top">
-            <strong class="title"><box-icon class="c-icon" name='male' ></box-icon><%=consult.doctor%></strong>
-            <i class="bx bx-dots-vertical-rounded"></i>
-        </div>
-        <div class="middle">
-          <div class="left">
-              <%= cl_image_tag User.find(consult.user_id).profile_photo.key, class: 'profile-image'%>
+    <%= link_to consultation_path(consult), class: 'card-link' do %>
+        <div class="all-consultations">
+          <div class="card-all">
+            <div class="middle-all">
+              <div class="left-all">
+                <%= cl_image_tag User.find(consult.user_id).profile_photo.key, class: 'dr-image'%>
+                <strong class="title-all">Dr <%=consult.doctor%></strong>
+              </div>
+              <div class="right-section">
+                <div>
+                  <ul>
+                    <li class="icon-div">
+                      <box-icon class="c-icon" type='solid' name='briefcase-alt-2'>
+                      </box-icon>
+                      <%= consult.speciality.capitalize%>
+                    </li>
+                    <li class="icon-div">
+                      <box-icon class="time-icon" name='time-five' type='solid' ></box-icon>
+                      <%= consult.experience%> yrs
+                    </li>
+                    <li class="icon-div">
+                      <box-icon class="c-icon" name='wallet-alt' type='solid' ></box-icon>
+                      £<%= consult.price_per_hour%>
+                    </li>
+                    <li class="icon-div">
+                      <box-icon class="c-icon" name='building-house' type='solid' ></box-icon>
+                      <%= consult.location%>
+                    </li>
+                  </ul>
+                </div>
+                <div class="third-column">
+                  <div class="social-icon">
+                    <span><i class="bx bxl-twitter"></i></span>
+                    <span><i class="bx bxl-instagram"></i></span>
+                    <span><i class="bx bxl-facebook"></i></span>
+                  </div>
+                  <div class="footer-info">
+                    <div class="icon-div">
+                      <box-icon class="c-icon" type='solid' name='gift'></box-icon>
+                      <i><%= consult.deal%>% off</i>
+                    </div>
+                  </div>
+                  <div class="short-bio">
+                    <small>
+                      Former Gp of the NHS trutst ...
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="right">
-            <div>
-              <ul>
-                <li class="icon-div">
-                  <box-icon class="c-icon" type='solid' name='briefcase-alt-2'>
-                  </box-icon>
-                  <%= consult.speciality.capitalize%>
-                </li>
-                <li class="icon-div">
-                  <box-icon class="time-icon" name='time-five' type='solid' ></box-icon>
-                  <%= consult.experience%> yrs
-                </li>
-                <li class="icon-div">
-                  <box-icon class="c-icon" name='wallet-alt' type='solid' ></box-icon>
-                  £<%= consult.price_per_hour%>
-                </li>
-              </ul>
-            </div>
-            <div class="social-icon">
-              <span><i class="bx bxl-twitter"></i></span>
-              <span><i class="bx bxl-linkedin"></i></span>
-              <span><i class="bx bxl-instagram"></i></span>
-              <span><i class="bx bxl-facebook"></i></span>
-            </div>
-          </div>
         </div>
-        <div class="bottom">
-          <div class="footer-info">
-            <div class="icon-div">
-              <box-icon class="c-icon" name='building-house' type='solid' ></box-icon>
-              <%= consult.location%>
-            </div>
-            <div class="icon-div">
-              <i class='c-icon bx bxl-sketch bx-flip-horizontal' ></i>
-              <i><%= consult.deal%>% off</i>
-            </div>
-          </div>
-            <%= link_to 'Visit', consultation_path(consult), class: "visit-btn btn" %>
-        </div>
-      </div>
-    </section>
-  </div>
+    <%end%>
   <% end %>
 </div>

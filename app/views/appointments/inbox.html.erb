@@ -1,0 +1,21 @@
+
+  <h3>My Messages</h3>
+<% if @messages %>
+  <div class="messages-box">
+    <% @messages.each do |msg|%>
+      <%= link_to do %>
+        <div class="message-content">
+          <div class="message-text">
+            <p><%= msg["content"] %></p>
+          </div>
+          <div class="sender-image">
+            <% @user_img = msg["sender_photo"] %>
+            <%= cl_image_tag @user_img, class: 'profile-image-inbox'%>
+          </div>
+        </div>
+      <%end%>
+    <%end%>
+  </div>
+<%else%>
+  <p class="no-message">You have no messages</p>
+<% end %>

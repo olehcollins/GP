@@ -1,0 +1,68 @@
+.messages-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-inline: 1rem;
+
+  p {
+    color: white;
+    opacity: 0.7;
+  }
+}
+
+.message-content {
+  padding: 0.7rem 2rem;
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  transition: 0.5s hover ease-in-out;
+  transition: 1s width ease-in-out;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.5s ease-in-out;
+}
+
+.message-content:hover {
+  transform: translateY(-7px);
+  p {
+    opacity: 1;
+  }
+}
+
+.profile-image-inbox {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin-right: 1rem;
+}
+
+.sender-image img {
+  border-radius: 50%;
+  border: 1px solid transparent;
+  outline: 3px dashed rgba(255, 255, 255, 0.25);
+  transition: 0.3s ease-in-out;
+}
+
+.sender-imagev:hover {
+  img {
+    outline: 3px dashed #69fa0d;
+    transform: translateY(-5px);
+  }
+}
+
+.no-message {
+  text-align: center;
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem;
+  width: 50%;
+}

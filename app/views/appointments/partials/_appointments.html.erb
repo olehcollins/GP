@@ -1,75 +1,82 @@
 
 <div class="show-c">
-  <h3>My appointment</h3>
+  <% if @doctor%>
+    <h3>My Patiens</h3>
+  <% else %>
+    <h3> My Doctors</h3>
+  <%end %>
   <% @appt_arr.each do |apt|%>
-  <div class="aptms-card">
-    <div>
-      <section class="cons-show-card">
-        <div class="apt-card">
-          <div class="top">
-              <strong class="title apt-icon"><box-icon name='male' ></box-icon><%=apt[:full_name]%></strong>
-              <i class="bx bx-dots-vertical-rounded"></i>
-          </div>
-          <div class="aptm-top">
-            <div class="aptm-content" >
-              <div class="apt-left">
-                <ul>
-                  <li class="icon-div">
-                    <box-icon class="apt-icon" name='briefcase-alt-2' type='solid'  ></box-icon>
-                    <%= apt[:speciality]%>
-                  </li>
-                  <li class="icon-div">
-                   <box-icon class="apt-icon" name='envelope' type='solid' flip='horizontal' ></box-icon>
-                    <%= apt[:email]%>
-                  </li>
-                  <li class="icon-div">
-                    <box-icon name='time-five' type='solid' animation='spin' rotate='90' color='#fadb0d' ></box-icon>
-                    <%= apt[:date]%>
-                  </li>
-                  <li class="icon-div">
-                    <box-icon name='color' type='solid' rotate='90' animation='spin' color='#fadb0d' ></box-icon>
-                    <%= apt[:status]%>
-                  </li>
-                  <li class="icon-div">
-                    <box-icon class="apt-icon" name='building-house' type='solid' ></box-icon>
-                  <%= apt[:location]%>
-                  </li>
-                </ul>
-                <div class="message">
-                  <div class="notification">
-                    updates
-                    <%= if @request%>
-                      <%= @request %>
-                      <box-icon name='bell-ring' type='solid' animation='tada' color='#fadb0d' ></box-icon>
-                    <%end%>
-                  </div>
-                </div>
-                <div class="apt-p-im">
-                  <%= cl_image_tag apt[:photo], class: 'profile-image-apt'%>
-                  <div class="apt-btns">
-                    <% if !user_signed_in? %>
-                      <%= link_to "Home", root_path, class: "btn btn-primary" %>
-                    <% else %>
-                      <% if  apt[:doctor]%>
-                      <%# <% raise %>
-                        <% if apt[:status] == 'pending'%>
-                          <%= button_to 'Approve', approve_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
-                          <%= button_to 'Deny', deny_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
-                        <% else%>
-                          <%= button_to "Delete", appointment_path(apt[:aptm]), method: :delete, class: 'btn'%>
-                        <% end%>
-                      <% else%>
-                        <%= button_to 'Cancel', cancel_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
-                      <% end %>
-                    <% end %>
+    <%= link_to consultation_path(apt[:consultation]) do %>
+      <div class="aptms-card">
+        <div>
+          <section class="cons-show-card">
+            <div class="apt-card">
+              <div class="top">
+                  <strong class="title apt-icon"><box-icon name='male' ></box-icon><%=apt[:full_name]%></strong>
+                  <i class="bx bx-dots-vertical-rounded"></i>
+              </div>
+              <div class="aptm-top">
+                <div class="aptm-content" >
+                  <div class="apt-left">
+                    <ul>
+                      <li class="icon-div">
+                        <box-icon class="apt-icon" name='briefcase-alt-2' type='solid'  ></box-icon>
+                        <%= apt[:speciality]%>
+                      </li>
+                      <li class="icon-div">
+                      <box-icon class="apt-icon" name='envelope' type='solid' flip='horizontal' ></box-icon>
+                        <%= apt[:email]%>
+                      </li>
+                      <li class="icon-div">
+                        <% if apt[:status] == 'approved'%>
+                          <box-icon name='time-five' type='solid' animation='tada' rotate='90' color='#69fa0d' ></box-icon>
+                        <% else %>
+                          <box-icon type='solid' animation="spin" name='time-five' color='#fadb0d'></box-icon>
+                        <% end %>
+                        <%= apt[:date]%>
+                      </li>
+                      <li class="icon-div">
+                        <% if apt[:status] == 'approved'%>
+                          <box-icon name='color' type='solid' rotate='90' animation='tada' color='#69fa0d' ></box-icon>
+                        <% else %>
+                          <box-icon name='color' animation='spin' animation='spin' color='#fadb0d' ></box-icon>
+                        <% end %>
+                        <%= apt[:status]%>
+                      </li>
+                      <li class="icon-div">
+                        <box-icon class="apt-icon" name='building-house' type='solid' ></box-icon>
+                      <%= apt[:location]%>
+                      </li>
+                    </ul>
+                    <div class="apt-p-im">
+                      <%= cl_image_tag apt[:photo], class: 'profile-image-apt'%>
+                      <div class="apt-btns">
+                        <% if !user_signed_in? %>
+                          <%= link_to "Home", root_path, class: "btn btn-primary" %>
+                        <% else %>
+                          <% if  apt[:doctor]%>
+                          <%# <% raise %>
+                            <% if apt[:status] == 'pending'%>
+                            <div class="status-btns">
+                              <%= button_to 'Approve', approve_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
+                              <%= button_to 'Deny', deny_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
+                            </div>
+                            <% else%>
+                              <%= button_to "Delete", appointment_path(apt[:aptm]), method: :delete, class: 'btn'%>
+                            <% end%>
+                          <% else%>
+                            <%= button_to 'Cancel', cancel_appointment_path(apt[:aptm]), method: :post, class: 'btn'%>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
-      </section>
-    </div>
-  </div>
+      </div>
+    <%end%>
   <%end%>
 </div>

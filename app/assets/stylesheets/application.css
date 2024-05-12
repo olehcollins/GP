@@ -47,3 +47,7 @@ body {
 a {
   text-decoration: none;
 }
+
+.d-none {
+  display: none;
+}

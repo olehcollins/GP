@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "home#index"
+  root to: "home#home"
+  get 'browse', to: 'home#index', as: 'browse_cons'
+
   get 'dr_app', to: 'appointments#index', as: 'dr_appointments'
   get 'pt_app', to: 'appointments#index', as: 'pt_appointments'
+  get 'inbox', to: 'appointments#inbox', as: 'messages'
 
   get "up" => "rails/health#show", as: :rails_health_check
 
