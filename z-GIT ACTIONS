@@ -1,0 +1,38 @@
+#             GIT HUB PULL REQUEST ACTIONS
+
+# update your local airdoc code by pulling the most recent airdoc code
+git pull origin master
+
+#see all branches and which branch you are currently on
+git branch
+
+# to make new changes create a new branch
+git checkout -b NEW BRANCH NAME
+
+# switch to your newly created branch
+git checkout YOUR BRANCH NAME
+
+# now make changes to the file or files and save them
+git status => see all uncommited changes to your files
+git diff => see the specific changes you made: its highlighted in green
+
+# if you are happy with your changes
+git add.
+git commit -m 'YOUR COMMIT MESSAGE'
+git push origin YOUR BRANCH NAME
+
+#=====================================
+# head to the airdoc file on github.com
+#=====================================
+
+# switch to the master branch
+git checkout master
+
+# update your local airdoc code by pulling the most recent airdoc code
+git pull origin master
+
+# delete the redundant branch you created as its been merged to the master branch
+git sweep
+
+# check you have a clean file
+git status

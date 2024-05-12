@@ -1,0 +1,37 @@
+.register-f .password label {
+  display: none;
+}
+
+.user-update-btn,
+.user-update-link {
+  opacity: 0.7;
+  margin: 0;
+  width: 160px;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 30px;
+  border: none;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.user-update-btn:hover {
+  background-color: #02cbf8;
+  opacity: 1;
+  transform: translateY(-6px);
+}
+
+.user-update-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error {
+  color: red;
+}

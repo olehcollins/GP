@@ -1,0 +1,43 @@
+<div class="">
+
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs container col-6">
+      <h2 class="container">Edit Profile</h2>
+
+      <%= f.input :email, required: true, autofocus: true %>
+      <%= f.input :first_name, required: true, autofocus: true %>
+      <%= f.input :last_name, required: true, autofocus: true %>
+      <%= f.input :profile_photo%>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+      <% end %>
+
+      <%= f.input :password,
+                  hint: "leave it blank if you don't want to change it",
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :password_confirmation,
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+      <%= f.input :current_password,
+                  hint: "we need your current password to confirm your changes",
+                  required: true,
+                  input_html: { autocomplete: "current-password" } %>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Update" %>
+      </div>
+      <div class=''>
+        <h3>Cancel my account</h3>
+        Unhappy?
+        <div class="d-flex space-between">
+        <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class:"flex-item"  %>
+        <br>
+        <%= link_to "Back", :back, class:"flex-item mx-4"%>
+        </div>
+      </div>
+  <% end %>
+</div>

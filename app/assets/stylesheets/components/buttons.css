@@ -1,0 +1,19 @@
+.btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 8px 27px;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+  font-weight: 600;
+}
+
+.btn:hover {
+  background-color: #02cbf8;
+  transform: translateY(-6px);
+}

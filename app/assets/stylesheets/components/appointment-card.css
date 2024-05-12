@@ -1,0 +1,78 @@
+.aptms-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.apt-card {
+  position: relative;
+  width: 500px;
+  height: 350px;
+  backdrop-filter: blur(25px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  transition: 0.5s hover ease-in-out;
+  transition: 1s width ease-in-out;
+}
+
+.aptm-top {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.apt-card:hover {
+  width: 900px;
+  strong {
+    color: #67f60c;
+  }
+  .apt-icon {
+    fill: #67f60c;
+  }
+}
+.aptm-top {
+  display: flex;
+  flex-direction: row;
+  /* padding: 20px 30px 0px 30px; */
+}
+.profile-im {
+  width: 120px;
+  height: 120px;
+}
+.profile-image-apt {
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 4rem;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+.aptm-top img {
+  border-radius: 50%;
+  border: 5px solid transparent;
+  outline: 3px dashed rgba(255, 255, 255, 0.25);
+  transition: 0.3s ease-in-out;
+}
+.aptm-top:hover {
+  img {
+    outline: 3px dashed #69fa0d;
+    transform: translateY(-5px);
+  }
+}
+
+.aptm-content {
+  width: 100%;
+}
+
+.apt-left {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  width: 100%;
+}
+.message {
+  width: 100%;
+}

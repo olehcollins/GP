@@ -1,0 +1,83 @@
+<div class="form-house">
+  <div class="register-form-container">
+    <div class="col register-col-1">
+      <div class="image-layer">
+        <%= image_tag("white-outline.png", class: "form-image-main") %>
+        <%= image_tag("dots.png", class: "form-image dots") %>
+        <%= image_tag("coin.png", class: "form-image coin") %>
+        <%= image_tag("spring.png", class: "form-image spring") %>
+        <%= image_tag("rocket.png", class: "form-image rocket") %>
+        <%= image_tag("cloud.png", class: "form-image cloud") %>
+        <%= image_tag("stars.png", class: "form-image stars") %>
+      </div>
+      <p ><strong class="form-subtitle">Purse </strong></p>
+    </div>
+    <div class="register-form-box">
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.error_notification %>
+      <h1 class="register-title">Edit profile</h1>
+        <div class="form-fields">
+          <div class="register-fields">
+            <div class="register-f">
+              <%= f.input :first_name,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: { autocomplete: "email",
+                          :'placeholder' => 'first name' } %>
+              <box-icon name='user-pin' ></box-icon>
+            </div>
+            <div class="register-f">
+              <%= f.input :last_name,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: { autocomplete: "email",
+                          :'placeholder' => 'last name' } %>
+              <box-icon name='user-pin' ></box-icon>
+            </div>
+            <div class="register-f">
+              <%= f.input :email,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: { autocomplete: "email",
+                          :'placeholder' => 'email' } %>
+              <box-icon name='envelope'></box-icon>
+            </div>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <% end %>
+            <div class="register-f">
+              <%= f.input :password,
+                          label: '',
+                          required: false,
+                          input_html: { autocomplete: "new-password",
+                          :'placeholder' => 'password: minimum 6 characters' } %>
+              <box-icon name='lock-alt' ></box-icon>
+            </div>
+            <div class="register-f">
+              <%= f.input :password_confirmation,
+                          label: '',
+                          required: false,
+                          input_html: { autocomplete: "new-password",
+                          :'placeholder' => 'confirm password' } %>
+              <box-icon name='lock-alt' ></box-icon>
+            </div>
+            <div class="register-f">
+              <%= f.input :profile_photo,
+                          as: :file,
+                          label: ''%>
+              <box-icon name='photo-album' ></box-icon>
+            </div>
+            <div class="register-actions">
+              <%= f.button :submit, "Update", class: 'user-update-btn' %>
+              <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class:"user-update-btn"  %>
+              <%= link_to "Back", :back, class:"user-update-btn user-update-link"%>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

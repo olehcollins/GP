@@ -1,0 +1,94 @@
+
+<div class="show-c">
+  <h3>My Consultations</h3>
+  <div class="consult-card">
+    <div>
+      <section class="cons-show-card">
+        <div class="cons-card">
+          <div class="top">
+              <strong class="title"><box-icon name='male' color='#67f60c' ></box-icon><%=@consultation.doctor%></strong>
+              <i class="bx bx-dots-vertical-rounded"></i>
+          </div>
+          <div class="middle">
+            <div class="left">
+                <%= cl_image_tag User.find(@consultation.user_id).profile_photo.key, class: 'profile-image'%>
+            </div>
+            <div class="right">
+              <div>
+                <ul>
+                  <li class="icon-div">
+                    <box-icon name='briefcase-alt-2' type='solid' color='#66f40c' ></box-icon>
+                    <%= @consultation.speciality.capitalize%>
+                  </li>
+                  <li class="icon-div">
+                    <box-icon name='time-five' type='solid' color='#66f40c' ></box-icon>
+                    <%= @consultation.experience%>yrs
+                  </li>
+                  <li class="icon-div">
+                    <box-icon name='wallet-alt' type='solid'color='#66f40c'></box-icon>
+                    £<%= @consultation.price_per_hour%>
+                  </li>
+                </ul>
+              </div>
+              <div class="social-icon">
+                <span><i class="bx bxl-twitter"></i></span>
+                <span><i class="bx bxl-linkedin"></i></span>
+                <span><i class="bx bxl-instagram"></i></span>
+                <span><i class="bx bxl-facebook"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="footer-info">
+              <div class="icon-div">
+                <box-icon name='building-house' type='solid'color='#66f40c' ></box-icon>
+                <%= @consultation.location%>
+              </div>
+              <div class="icon-div">
+                <i class='bx bxl-sketch bx-flip-horizontal' color='#66f40c' ></i>
+                <i ><%= @consultation.deal%>% off</i>
+              </div>
+            </div>
+            <% if @doctor %>
+              <%=button_to "Delete", @consultation, method: :delete, class: "visit-btn btn"%>
+            <% else %>
+              <%=button_to "Back", consultations_path, class: "visit-btn btn"%>
+            <% end %>
+          </div>
+          <div class="description">
+            <i class='bx bxl-sketch bx-flip-horizontal' ></i>
+            <i><%= @consultation.description%>% off</i>
+          </div>
+          <div class="apt-btns">
+            <% if user_signed_in? %>
+              <%= link_to "Back", consultations_path, class: "btn btn" %>
+            <% else %>
+              <%= link_to "Home", root_path, class: "btn btn-primary" %>
+            <% end %>
+            <% if @consultation.user == current_user %>
+              <%= button_to "Delete", @consultation, method: :delete, class: 'btn'%>
+            <% else %>
+              <%if user_signed_in? %>
+
+                <%= simple_form_for [@consultation, @appointment] do |f|%>
+                  <div class="apt-form">
+                    <div>
+                     <%= f.input :date, class: 'btn' %>
+                    </div>
+                    <div>
+                      <%= f.submit %>
+                    </div>
+                <% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="form-div">
+      </section>
+    </div>
+  </div>
+</div>
+<% @consultation.photos.each do |photo| %>
+  <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+<% end %>
+<% render 'consultations/partials/cons-appointments'%>

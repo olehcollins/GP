@@ -1,0 +1,39 @@
+<div class="form-div">
+  <h2>Add consultation</h2>
+
+    <%= simple_form_for @consultation do |f|%>
+      <div class="consultform">
+        <div class="input">
+          <%= f.input :price_per_hour %>
+        </div>
+
+        <div class="input">
+          <%= f.input :location %>
+        </div>
+
+        <div class="input">
+          <%= f.input :speciality %>
+        </div>
+
+        <div class="input">
+          <%= f.input :experience %>
+        </div>
+
+        <div class="input">
+          <%= f.input :deal %>
+        </div>
+
+        <div class="input">
+          <%= f.input :description %>
+        </div>
+
+        <div class="input">
+          <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+        </div>
+      </div>
+
+        <div class="form-btns form-actions">
+          <%= f.button :submit, "Create Consultation", class: 'btn btn-primary' %>
+        </div>
+    <% end %>
+</div>

@@ -1,0 +1,77 @@
+<div class="show-c">
+  <h3>My appointment</h3>
+  <% @appointments.each do |aptm|%>
+  <div class="aptms-card">
+    <div>
+      <section class="cons-show-card">
+        <div class="apt-card">
+          <div class="top">
+              <strong class="title"><box-icon name='male' color='#67f60c' ></box-icon><%=aptm.doctor%></strong>
+              <i class="bx bx-dots-vertical-rounded"></i>
+          </div>
+          <div class="aptm-top">
+            <div class="aptm-content" >
+              <div class="apt-left">
+                <ul>
+                  <li class="icon-div">
+                    <box-icon name='briefcase-alt-2' type='solid' color='#66f40c' ></box-icon>
+                    <%= aptm.status %>
+                  </li>
+                  <li class="icon-div">
+                   <box-icon name='envelope' type='solid' flip='horizontal' color='#69fa0d' ></box-icon>
+                    <%= @consultation.user.email%>
+                  </li>
+                  <li class="icon-div">
+                    <box-icon name='time-five' type='solid' animation='spin' rotate='90' color='#fadb0d' ></box-icon>
+                    <%= aptm.date%>
+                  </li>
+                  <li class="icon-div">
+                    <box-icon name='color' type='solid' rotate='90' animation='spin' color='#fadb0d' ></box-icon>
+                    <%= aptm.patient%>
+                  </li>
+                  <li class="icon-div">
+                    <box-icon name='bell' type='solid' color='#fadb0d' ></box-icon>
+
+                  </li>
+                </ul>
+                <div class="message">
+                  You have a notifications
+                </div>
+                <div class="profile-im">
+                  <%= cl_image_tag User.find(aptm.user_id).profile_photo.key, class: 'profile-image-apt'%>
+                </div>
+              </div>
+              <div class="btns-aptms">
+                <div class="bottom">
+              <div class="footer-info">
+                <div class="icon-div">
+                  <box-icon name='building-house' type='solid'  color='#69fa0d' ></box-icon>
+
+                </div>
+                <div class="icon-div">
+                  <i class='bx bxl-sketch bx-flip-horizontal' ></i>
+                  <i><%= @consultation.deal%>% off</i>
+                  <div class="apt-btns">
+                    <% if user_signed_in? %>
+                      <%= link_to "Back", consultations_path, class: "btn btn" %>
+                    <% else %>
+                      <%= link_to "Home", root_path, class: "btn btn-primary" %>
+                    <% end %>
+                    <% if @consultation.user == current_user %>
+                      <%= button_to "Delete", @consultation, method: :delete, class: 'btn'%>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="form-div">
+      </section>
+    </div>
+  </div>
+  <%end%>
+</div>

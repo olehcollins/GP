@@ -1,0 +1,57 @@
+
+<div class="dashboard-c-cards">
+  <h3>My Consultations</h3>
+  <div class="consult-cards">
+    <% @consultations.each do |consult|%>
+    <div>
+      <section class="all-consultations">
+        <div class="card">
+          <div class="middle">
+            <div class="left">
+              <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-all'%>
+            </div>
+            <div class="right">
+              <div>
+                <ul>
+                  <li class="icon-div">
+                    <box-icon class="c-icon" type='solid' name='briefcase-alt-2'>
+                    </box-icon>
+                    <%= consult.speciality.capitalize%>
+                  </li>
+                  <li class="icon-div">
+                    <box-icon class="c-icon" name='time-five' type='solid' ></box-icon>
+                    <%= consult.experience%>yrs
+                  </li>
+                  <li class="icon-div">
+                    <box-icon class="c-icon" name='wallet-alt' type='solid' ></box-icon>
+                    £<%= consult.price_per_hour%>
+                  </li>
+                </ul>
+              </div>
+              <div class="cons-notices">
+                <%= link_to appointments_path, class: 'cons-aptm-link' do %>
+                  <small>You have <%= consult.appointments.size %> appointments<box-icon class="box-icon-notice" type='solid' name='user-pin' animation="tada-hover"></box-icon></small>
+                <% end %>
+                <%= %>
+              </div>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="footer-info">
+              <div class="icon-div">
+                <box-icon class="c-icon" name='building-house' type='solid' ></box-icon>
+                <%= consult.location.capitalize %>
+              </div>
+              <div class="icon-div">
+                <box-icon class="c-icon" name='gift' type='solid' animation='tada-hover' ></box-icon>
+                <i><%= consult.deal%>% off</i>
+              </div>
+            </div>
+            <%= link_to 'Visit', consultation_path(consult), class: "visit-btn btn" %>
+          </div>
+        </div>
+      </section>
+    </div>
+    <% end %>
+  </div>
+</div>

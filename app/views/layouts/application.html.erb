@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <%#=== box-icons=== %>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <%# COMPONENT CSS %>
+    <%= stylesheet_link_tag "components/nav-bar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/buttons", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/dashboard", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/appointment-card", "data-turbo-track": "reload" %>
+
+    <%# PAGES CSS %>
+    <%#==== home-pages=== %>
+    <%= stylesheet_link_tag "pages/home-page", "data-turbo-track": "reload" %>
+
+    <%#==== user pages=== %>
+    <%= stylesheet_link_tag "pages/users/register", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "pages/users/signin", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "pages/users/edit", "data-turbo-track": "reload" %>
+
+    <%#==== consultation pages=== %>
+    <%= stylesheet_link_tag "pages/consultations/show", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "pages/consultations/form", "data-turbo-track": "reload" %>
+
+
+    <%# COMPONENT JAVASCRIPT %>
+    <%= javascript_include_tag('pages/home-page') %>
+
+
+    <%# PAGES JAVASCRIPT %>
+
+  </head>
+
+  <body>
+    <header class="header">
+      <div>
+        <%= link_to(root_path, class: 'nav-link') do %>
+            <box-icon class="nav-icon" type='solid' name='home-smile' animation="tada-hover"></box-icon>
+          <% end %>
+      </div>
+      <nav class="navbar">
+      <% if user_signed_in? %>
+        <div class="nav-group">
+          <%= link_to(consultations_path, class: 'nav-link') do %>
+            <box-icon class="nav-icon" type='solid' name='dashboard' animation="tada-hover"></box-icon>
+          <% end %>
+          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class:'btn btn-home' %>
+          <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-nav'%>
+          <% else %>
+          <%= link_to 'Sign Up', new_user_registration_path, class:'btn btn-home'%>
+          <%= link_to 'Sign In', new_user_session_path, class:'btn btn-home'%>
+          <% end %>
+        </div>
+        <div class="profile-picture"
+          <%if user_signed_in?%>
+            <%if current_user.profile_photo.key %>
+            <%= cl_image_tag current_user.profile_photo.key, height: 80, width: 80, crop: :fill, style: 'border-radius: 50%; margin-right:1rem; padding: 0;' %>
+            <% else%>
+            <box-icon name='face' type='solid' color='#4f4946' ></box-icon>
+            <% end %>
+          <%end%>
+        </div>
+      </nav>
+    </header>
+    <br>
+    <div class="content">
+      <% if notice || alert %>
+        <div class="all-notices">
+          <% if notice %>
+          <p class="notices">
+            <%= notice %> Testing 1 to 3 👍
+            <button class="btn-notice">
+              <box-icon name='x' animation='tada' ></box-icon>
+            </button>
+          </p>
+          <% end %>
+          <%if alert %>
+          <p class="alerts">
+            <%= alert %> Testing 1 to 3 👍
+            <button class="btn-notice">
+              <box-icon name='x' animation='tada' ></box-icon>
+            </button>
+          </p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

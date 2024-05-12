@@ -1,0 +1,75 @@
+.header {
+  z-index: 1000;
+  /* * {
+    border: 1px solid red;
+  } */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-block: 10px;
+  padding-inline-start: 50px;
+  padding-inline-end: 0px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 4rem;
+  align-items: center;
+}
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: 0.5s;
+}
+.header:hover::before {
+  left: 100%;
+}
+.navbar,
+.nav-group {
+  align-items: center;
+  display: flex;
+  gap: 3rem;
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.home {
+  font-size: 18px;
+}
+.nav-link {
+  text-decoration: none;
+  color: white;
+}
+
+.profile-image-nav {
+  /* margin-top: 1.5rem; */
+  margin-left: 1rem;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  outline: 3px dashed rgba(255, 255, 255, 0.25);
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.profile-image-nav:hover {
+  outline: 3px dashed #02cbf8;
+  transform: translateY(-3px);
+  animation: spin 5s linear infinite;
+}

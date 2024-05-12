@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/nav-bar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/dashboard", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "components/appointment-card", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "pages/home-page", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "pages/consultations/show", "data-turbo-track": "reload" %>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag('pages/home-page') %>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  </head>
+
+  <body>
+    <header class="header">
+      <div>
+        <%= link_to(root_path, class: 'nav-link') do %>
+            <box-icon class="nav-icon" type='solid' name='home-smile' animation="tada-hover"></box-icon>
+          <% end %>
+      </div>
+      <nav class="navbar">
+      <% if user_signed_in? %>
+        <div class="nav-group">
+          <%= link_to(consultations_path, class: 'nav-link') do %>
+            <box-icon class="nav-icon" type='solid' name='dashboard' animation="tada-hover"></box-icon>
+          <% end %>
+          <%= button_to 'Sign Out', destroy_user_session_path, method: :delete, class:'btn btn-danger' %>
+          <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-nav'%>
+          <% else %>
+          <%= link_to 'Sign Up', new_user_registration_path, class:'nav-link'%>
+          <%= link_to 'Sign In', new_user_session_path, class:'nav-link'%>
+          <% end %>
+        </div>
+        <div class="profile-picture"
+          <%if user_signed_in?%>
+            <%if current_user.profile_photo.key %>
+            <%= cl_image_tag current_user.profile_photo.key, height: 80, width: 80, crop: :fill, style: 'border-radius: 50%; margin-right:3rem; padding: 0;' %>
+            <% else%>
+            <p>upload photo</p>
+            <% end %>
+          <%end%>
+        </div>
+      </nav>
+    </header>
+    <br>
+    <div class="consult-content-layout">
+      <% if notice || alert %>
+        <div class="all-notices">
+          <% if notice %>
+          <p class="notices">
+            <%= notice %> Testing 1 to 3 👍
+            <button class="btn-notice">
+              <box-icon name='x' animation='tada' ></box-icon>
+            </button>
+          </p>
+          <% end %>
+          <%if alert %>
+          <p class="alerts">
+            <%= alert %> Testing 1 to 3 👍
+            <button class="btn-notice">
+              <box-icon name='x' animation='tada' ></box-icon>
+            </button>
+          </p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+<nav class="sidebar">
+  <div>
+    <div class="profile-div">
+      <a href="#">
+        <%= cl_image_tag current_user.profile_photo.key, class: 'profile-image-dash'%>
+        <div class="profile-info">
+          <span class="user-name">
+            <box-icon type='solid' name='user'></box-icon>
+          </span>
+          <%= link_to @current_user_fn, edit_user_registration_path, class:'nav-link'%>
+        </div>
+      </a>
+    </div>
+    <small class="menu-heading">
+      <span>Admin Tools</span>
+    </small>
+    <hr style='margin-bottom: 1rem;'>
+    <ul class="tools" >
+      <li class="dash-link">
+        <box-icon name='inbox' type='solid' ></box-icon>
+        <%= link_to 'Inbox', dr_appointments_path('doctor'), class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link">
+        <box-icon type='solid' name='contact'></box-icon>
+        <%= link_to 'My Drs', dr_appointments_path('doctor'), class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link">
+        <box-icon type='solid' name='contact'></box-icon>
+        <%= link_to 'My Patients', pt_appointments_path('patients'), class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link">
+        <box-icon name='folder-plus'></box-icon>
+        <%= link_to 'Consultations', new_consultation_path, class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link">
+        <box-icon type='solid' name='archive-out'></box-icon>
+        <%= link_to 'Consultations', root_path, class:'dash-nav-link'%>
+      </li>
+      <li class="dash-link" style="margin-bottom: 4rem">
+        <box-icon type='solid' name='archive-out'></box-icon>
+        <%= link_to 'Appointments', root_path, class:'dash-nav-link'%>
+      </li>
+    </ul>
+  </div>
+</nav>
+  </body>
+</html>

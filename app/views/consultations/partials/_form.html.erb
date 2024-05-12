@@ -1,0 +1,76 @@
+<div class="form-house">
+  <div class="newcons-form-container">
+    <div class="col newcons-col-1">
+      <div class="image-layer">
+        <%= image_tag("white-outline.png", class: "form-image-main") %>
+        <%= image_tag("dots.png", class: "form-image dots") %>
+        <%= image_tag("coin.png", class: "form-image coin") %>
+        <%= image_tag("spring.png", class: "form-image spring") %>
+        <%= image_tag("rocket.png", class: "form-image rocket") %>
+        <%= image_tag("cloud.png", class: "form-image cloud") %>
+        <%= image_tag("stars.png", class: "form-image stars") %>
+      </div>
+      <p ><strong class="form-subtitle">Purse </strong></p>
+    </div>
+    <div class="newcons-form-box">
+     <%= simple_form_for @consultation do |f|%>
+      <%= f.error_notification %>
+      <h1 class="newcons-title">Create consultation</h1>
+        <div class="form-fields">
+          <div class="newcons-fields">
+            <div class="newcons-f">
+              <%= f.input :price_per_hour,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: { autocomplete: "email",
+                          :'placeholder' => '£ price' } %>
+              <box-icon name='purchase-tag-alt'></box-icon>
+            </div>
+            <div class="newcons-f">
+              <%= f.input :location,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: {
+                          :'placeholder' => 'location' } %>
+              <box-icon type='solid' name='map-pin'></box-icon>
+            </div>
+            <div class="newcons-f">
+              <%= f.input :speciality,
+                          label: '',
+                          required: true,
+                          autofocus: true,
+                          input_html: {
+                          :'placeholder' => 'speciality' } %>
+              <box-icon type='solid' name='wrench'></box-icon>
+            </div>
+            <div class="newcons-f">
+              <%= f.input :experience,
+                          label: '',
+                          required: true,
+                          input_html: {
+                          :'placeholder' => 'experience' } %>
+              <box-icon type='solid' name='time-five'></box-icon>
+            </div>
+            <div class="newcons-f">
+              <%= f.input :description,
+                          label: '',
+                          required: false%>
+              <%# <box-icon name='lock-alt' ></box-icon> %>
+            </div>
+            <div class="newcons-f">
+              <%= f.input :photos,
+                          as: :file,
+                          label: ''%>
+              <box-icon name='photo-album' ></box-icon>
+            </div>
+          </div>
+          <div class="newcons-actions">
+            <%= f.button :submit, "Create", class: 'session-btn' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
